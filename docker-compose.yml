@@ -22,7 +22,7 @@ services:
                         - runnable
                 pid: "service:runnable"
                 volumes:
-                        - "./itemp/monitor:/temp/"
+                        - "./temp/monitor:/temp/"
                         - "./temp/shared:/shared"
                 restart: "always"
                 privileged: true
