@@ -1,0 +1,41 @@
+version: "2.2"
+
+services:
+        runnable:
+                build: runnable
+                container_name: runnable
+                ports:
+                        - 80:80 
+                volumes:
+                        - "./temp/runnable:/temp/"
+                        - "./temp/shared:/shared"
+                restart: "always"
+                cpu_count: 2
+                cpuset: "0,1"
+        monitor:
+                build: monitor
+                container_name: monitor
+                ports:
+                        - 81:80
+                links:
+                        - minniegun
+                        - runnable
+                pid: "service:runnable"
+                volumes:
+                        - "./itemp/monitor:/temp/"
+                        - "./temp/shared:/shared"
+                restart: "always"
+                privileged: true
+                cpuset: "2"
+        minniegun:
+                build: minniegun
+                container_name: minniegun
+                ports:
+                        - 82:80
+                links:
+                        - runnable
+                volumes:
+                        - "./temp/minniegun:/temp/"
+                        - "./temp/shared:/shared"
+                restart: "always"
+
